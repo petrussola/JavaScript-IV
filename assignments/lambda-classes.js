@@ -35,9 +35,7 @@ class Instructor extends Person {
     return `Today we are learning about ${subject}`
   }
   grade(student, subject) {
-    /// FIX ////
     return `${student.name} receives a perfect score on ${subject}`
-    /// ////
   }
 };
 
@@ -101,3 +99,11 @@ const maria = new ProjectManager({
   favInstructor: "Gabe"
 });
 
+const gabe = new Instructor({
+  name: 'Gabe',
+  location: 'everywhere',
+  age: 42,
+  favLanguage: 'all',
+  specialty: 'all',
+  catchPhrase: `grumble, grumble`,
+});
