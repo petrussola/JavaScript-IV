@@ -38,8 +38,13 @@ class Instructor extends Person {
     return `${student.name} receives a perfect score on ${subject}`
   }
   givePoints(student) {
-    student.grade = Math.floor(Math.random() * Math.floor(100));
-    return `Dear ${student.name}, I have given you ${student.grade} points.`
+    if (student.isGraduated === false) {
+      let score = Math.floor(Math.random() * Math.floor(100));
+      student.grade += score;
+      return `Dear ${student.name}, I have given you ${score} and now you have ${student.grade} points.`
+    } else {
+      return `I can't give points, ${student.name} has graduated already!`
+    } 
   }
 };
 
@@ -50,6 +55,7 @@ class Student extends Person {
     this.className = data.className;
     this.favSubjects = data.favSubjects; // array
     this.grade = 0;
+    this.isGraduated = false;
   }
   listsSubjects() {
     // console.log(this.favSubjects);
@@ -62,6 +68,13 @@ class Student extends Person {
   }
   sprintChallenge(subject) {
     return `${this.name} has begun sprint challenge on ${subject}`
+  }
+  graduate() {
+    if (this.grade > 70) {
+      return `Congratulations, you have achieved a score of ${this.grade} and you can graduate!`
+    } else {
+      return `You have not achieved 70 yet, you need to work harder to graduate.`
+    }
   }
 };
 
