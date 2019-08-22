@@ -37,6 +37,10 @@ class Instructor extends Person {
   grade(student, subject) {
     return `${student.name} receives a perfect score on ${subject}`
   }
+  givePoints(student) {
+    student.grade = Math.floor(Math.random() * Math.floor(100));
+    return `Dear ${student.name}, I have given you ${student.grade} points.`
+  }
 };
 
 class Student extends Person {
@@ -45,6 +49,7 @@ class Student extends Person {
     this.previousBackground = data.previousBackground;
     this.className = data.className;
     this.favSubjects = data.favSubjects; // array
+    this.grade = 0;
   }
   listsSubjects() {
     // console.log(this.favSubjects);
@@ -83,7 +88,8 @@ const fred = new Student({
   catchPhrase: `Don't forget the homies`,
   previousBackground: 'whatever',
   className: 'WEBEU3',
-  favSubjects: ['JS', 'CSS', 'HTML']
+  favSubjects: ['JS', 'CSS', 'HTML'],
+  grade: 100
 });
 const maria = new ProjectManager({
   name: 'Maria',
