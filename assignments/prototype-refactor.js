@@ -144,16 +144,16 @@ console.log(pere);
     * dimensions (These represent the character's size in the video game)
     * destroy() // prototype method that returns: `${this.name} was removed from the game.`
   */
-  
-  function GameObject (input) {
-    this.createdAt = input.createdAt;
-    this.name = input.name;
-    this.dimensions = input.dimensions;
-  }
-  
-  GameObject.prototype.destroy = function () {
-    return `${this.name} was removed from the game.`;
-  }
+  class GameObject {
+    constructor (input) {
+      this.createdAt = input.createdAt;
+      this.name = input.name;
+      this.dimensions = input.dimensions;
+    }
+    destroy() {
+      return `${this.name} was removed from the game.`;
+    }
+  };
   
   /*
   === CharacterStats ===
@@ -161,16 +161,15 @@ console.log(pere);
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
   */
-  
-  function CharacterStats (input) {
-    GameObject.call(this, input);
-    this.healthPoints = input.healthPoints;
-  };
-  CharacterStats.prototype = Object.create(GameObject.prototype);
-  
-  CharacterStats.prototype.takeDamage = function () {
-    // return `${this} took damage`;
-    return `${this.name} took damage.`;
+  class CharacterStats extends GameObject {
+    constructor (input) {
+      super(input);
+      this.healthPoints = input.healthPoints;
+    }
+    takeDamage() {
+      // return `${this} took damage`;
+      return `${this.name} took damage.`;
+    }
   };
   
   
@@ -184,19 +183,17 @@ console.log(pere);
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
   */
-  
-  function Humanoid (input) {
-    CharacterStats.call(this, input)
-    this.team = input.team;
-    this.weapons = input.weapons;
-    this.language = input.language;
-  }
-  Humanoid.prototype = Object.create(CharacterStats.prototype);
-  
-  Humanoid.prototype.greet = function () {
-    return `${this.name} offers a greeting in ${this.language}.`
+  class Humanoid extends CharacterStats {
+    constructor (input) {
+      super(input);
+      this.team = input.team;
+      this.weapons = input.weapons;
+      this.language = input.language;
+    }  
+    greet() {
+      return `${this.name} offers a greeting in ${this.language}.`
+    }
   };
-  
   
   // var newMan = new Humanoid(new Date(), "miname", {length: 2, width: 1}, 20, "test" , "test" , "test")
   // console.log(newMan.dimensions);
