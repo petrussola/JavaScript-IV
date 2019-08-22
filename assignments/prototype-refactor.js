@@ -8,7 +8,7 @@ Prototype Refactor
 
 */
 
-class Person {
+class Person2 {
     constructor (name, age) {
         this.name = name;
         this.age = age;
@@ -27,7 +27,7 @@ class Person {
     }
 };
   
-var pere = new Person("Pere", 36);
+var pere = new Person2("Pere", 36);
 console.log(pere);
   
   /*
@@ -75,7 +75,7 @@ console.log(pere);
     - Babies should have the ability to play, which persons don't.
     - By playing, a string is returned with some text of your choosing.*/
 
-    class Baby extends Person {
+    class Baby extends Person2 {
       play () {
         return `I, ${this.name}, love to play`
       }
