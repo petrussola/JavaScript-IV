@@ -62,6 +62,20 @@ class Student extends Person {
   }
 };
 
+class ProjectManager extends Instructor {
+  constructor(data) {
+    super(data);
+    this.gradClassName = data.gradClassName;
+    this.favInstructor = data.favInstructor;
+  }
+  standUp(slackChannel) {
+    return `${this.name} announces to ${slackChannel}, @channel standy times!​​​​​`
+  }
+  debugsCode(studentObject, subject) {
+    return `${this.name} debugs ${studentObject.name}'s code on ${subject}`
+  } 
+};
+
 const fred = new Student({
   name: 'Fred',
   location: 'Bedrock',
@@ -72,5 +86,18 @@ const fred = new Student({
   previousBackground: 'whatever',
   className: 'WEBEU3',
   favSubjects: ['JS', 'CSS', 'HTML']
+});
+const maria = new ProjectManager({
+  name: 'Maria',
+  location: 'London',
+  age: 38,
+  favLanguage: 'CSS',
+  specialty: 'Back-end',
+  catchPhrase: `I say something`,
+  previousBackground: 'Tech industry',
+  className: 'WEBEU1',
+  favSubjects: ['React', 'CSS', 'HTML'],
+  gradClassName: 'WEBEU2',
+  favInstructor: "Gabe"
 });
 
