@@ -8,27 +8,27 @@ Prototype Refactor
 
 */
 
-
-function Person(name, age) {
-    this.name = name;
-    this.age = age;
-    this.stomach = [];
-  };
+class Person {
+    constructor (name, age) {
+        this.name = name;
+        this.age = age;
+        this.stomach = [];
+    } 
+    greet () {
+      return `My name is ${this.name} and I am ${this.age} years old`
+    }
+    
+    eat (food) {
+      this.stomach.push(food);
+    }
+    
+    poop () {
+      this.stomach = [];
+    }
+};
   
-  Person.prototype.greet = function () {
-    return `My name is ${this.name} and I am ${this.age} years old`
-  };
-  
-  Person.prototype.eat = function (food) {
-    return this.stomach.push(food);
-  }
-  
-  Person.prototype.poop = function () {
-    return this.stomach = [];
-  }
-  
-  var pere = new Person("Pere", 36);
-  console.log(pere);
+var pere = new Person("Pere", 36);
+console.log(pere);
   
   /*
     TASK 2
@@ -41,27 +41,28 @@ function Person(name, age) {
     - Give cars the ability to be repaired.
     - A repaired car can be driven again. */
   
-  function Car (model, make) {
-    this.model = model;
-    this.make = make;
-    this.odometer = 0;
-    this.canBeDriven = true;
-  }
+  class Car { 
+    constructor (model, make) {
+        this.model = model;
+        this.make = make;
+        this.odometer = 0;
+        this.canBeDriven = true;
+    }
   
-  Car.prototype.drive = function (kilometers) {
-    if (this.canBeDriven === true) {
-      return this.odometer+=kilometers;
-    } else {
-      return `I crashed at ${this.odometer} kilometers!`
+    drive (kilometers) {
+      if (this.canBeDriven === true) {
+        this.odometer+=kilometers;
+      } else {
+        return `I crashed at ${this.odometer} kilometers!`
+      }
+    }
+    crash () {
+      this.canBeDriven = false;
+    }
+    repair () {
+      this.canBeDriven = true;
     }
   };
-  Car.prototype.crash = function () {
-    return this.canBeDriven = false;
-  };
-  Car.prototype.repair = function () {
-    return this.canBeDriven = true;
-  }
-  
   var toyota = new Car ("Corolla", "Toyota");
   console.log(toyota);
   
@@ -73,16 +74,12 @@ function Person(name, age) {
     - Babies of course inherit the ability to greet, which can be strange.
     - Babies should have the ability to play, which persons don't.
     - By playing, a string is returned with some text of your choosing.*/
-  
-    function Baby (name, age) {
-      Person.call(this, name, age);
+
+    class Baby extends Person {
+      play () {
+        return `I, ${this.name}, love to play`
+      }
     };
-  
-    Baby.prototype = Object.create(Person.prototype);
-  
-    Baby.prototype.play = function () {
-      return `I, ${this.name}, love to play`
-    }
   
     var babyShark = new Baby ("little one", 1);
     console.log(babyShark.name);
@@ -97,45 +94,38 @@ function Person(name, age) {
     complicated one with lots of state. Surprise us!
   
   */
-  
-  function Employee (name, department) {
-    this.name = name;
-    this.department = department;
-    this.warnings = 0;
+  class Employee {
+    constructor (name, department) {
+      this.name = name;
+      this.department = department;
+      this.warnings = 0;
+    }
+    lateForWork (hours) {
+      let impactOnWarnings = Number(Math.round(hours * 0.5));
+      this.warnings+=impactOnWarnings;
+      return `You are late ${hours} hours. (grumble grumble) I am giving you ${impactOnWarnings} warning(s). Watch out, you already have ${this.warnings} warnings..`
+    };
+    watchYoutube () {
+      this.warnings+=1;
+      return `I caught you watching YouTube at work. I am giving you 1 warning. Watch out, you already have ${this.warnings}..`;
+    };
+    lunchBreakTooLong () {
+      this.warnings+=1;
+      return `You took a lunch break too long. I have to give you a warning. Watch out, you already have ${this.warnings} warnings..`;
+    };
+    employeeReview () {
+      if (this.warnings === 0) {
+        return `You are doing great!`;
+      } else if (this.warnings > 0 && this.warnings < 3) {
+        return `Be careful, you have ${this.warnings} warnings. You need to improve!`;
+      } 
+      return `You have ${this.warnings} warnings. You are fired!`;
+    }
   }
-  
-  Employee.prototype.lateForWork = function (hours) {
-    
-    let impactOnWarnings = Number(Math.round(hours * 0.5));
-    this.warnings+=impactOnWarnings;
-    return `You are late ${hours} hours. (grumble grumble) I am giving you ${impactOnWarnings} warning(s). Watch out, you already have ${this.warnings} warnings..`
-  };
-  
-  Employee.prototype.watchYoutube = function () {
-    this.warnings+=1;
-    return `I caught you watching YouTube at work. I am giving you 1 warning. Watch out, you already have ${this.warnings}..`;
-  
-  }
-  
-  Employee.prototype.lunchBreakTooLong = function() {
-    this.warnings+=1;
-    return `You took a lunch break too long. I have to give you a warning. Watch out, you already have ${this.warnings} warnings..`;
-  }
-  
-  Employee.prototype.employeeReview = function () {
-    if (this.warnings === 0) {
-      return `You are doing great!`;
-    } else if (this.warnings > 0 && this.warnings < 3) {
-      return `Be careful, you have ${this.warnings} warnings. You need to improve!`;
-    } 
-    return `You have ${this.warnings} warnings. You are fired!`;
-  }
-  
   let john = new Employee ("john", "eng");
   console.log(john);
   
-  
-  
+
   /*
   
     STRETCH TASK
